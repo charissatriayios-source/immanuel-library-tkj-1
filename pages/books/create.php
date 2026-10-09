@@ -7,11 +7,15 @@
   <link rel="stylesheet" href="../../styles/books/create.css">
 </head>
 <body>
-  <?php
-  // Data kategori & penulis dummy untuk mengisi dropdown/checkbox di form
-  $categories = ["Fiksi", "Sains", "Sejarah", "Teknologi"];
-  $authors = ["Andrea Hirata", "Tere Liye", "J.K. Rowling", "Pramoedya Ananta Toer", "Sapardi Djoko Damono"];
-  ?>
+ 
+<?php
+require '../../repositories/category-repository.php';
+require '../../repositories/author-repository.php';
+
+$categories = getCategories();
+$authors = getAuthors();
+?>
+
   <div class="app-shell">
   <?php include '../../components/admin/sidebar.php'; ?>
 
@@ -48,9 +52,11 @@ include '../../components/admin/topbar.php';
               <div class="form-group">
                 <label for="category_id">Kategori</label>
                 <select id="category_id" name="category_id">
-                  <?php foreach ($categories as $index => $category): ?>
-                    <option value="<?= $index + 1 ?>"><?= $category ?></option>
-                  <?php endforeach; ?>
+                  <?php foreach ($categories as $category): ?>
+  <option value="<?= $category['id'] ?>">
+    <?= htmlspecialchars($category['name']) ?>
+  </option>
+<?php endforeach; ?>
                 </select>
               </div>
             </div>
@@ -65,12 +71,12 @@ include '../../components/admin/topbar.php';
             <div class="form-group">
               <label>Pilih Penulis (bisa lebih dari satu)</label>
               <div class="checkbox-grid">
-                <?php foreach ($authors as $index => $authorName): ?>
-                  <label class="checkbox-item">
-                    <input type="checkbox" name="author_ids[]" value="<?= $index + 1 ?>">
-                    <?= $authorName ?>
-                  </label>
-                <?php endforeach; ?>
+               <?php foreach ($authors as $author): ?>
+  <label class="checkbox-item">
+    <input type="checkbox" name="author_ids[]" value="<?= $author['id'] ?>">
+    <?= htmlspecialchars($author['name']) ?>
+  </label>
+<?php endforeach; ?>
               </div>
             </div>
 
