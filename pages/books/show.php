@@ -9,6 +9,7 @@
 <body>
   <?php
   require '../../repositories/book-repository.php';
+  $book = getBook((int) ($_GET['id'] ?? 5));
   ?>
   <div class="app-shell">
   <?php include '../../components/admin/sidebar.php'; ?>

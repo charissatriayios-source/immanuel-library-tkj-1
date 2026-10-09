@@ -53,3 +53,19 @@ $book = [
   "description" => "Kumpulan puisi dan cerita pendek dari berbagai penulis Nusantara.",
   "authors" => ["Pramoedya Ananta Toer", "Sapardi Djoko Damono"],
 ];
+
+function getBook($id)
+{
+    global $books;
+
+    foreach ($books as $item) {
+        if ($item['id'] == $id) {
+            return array_merge($item, [
+                'isbn' => '978-602-1234-56-7',
+                'description' => 'Kumpulan puisi dan cerita pendek dari berbagai penulis Nusantara.'
+            ]);
+        }
+    }
+
+    return null;
+}
