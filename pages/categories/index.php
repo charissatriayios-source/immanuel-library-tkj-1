@@ -7,18 +7,33 @@
   <link rel="stylesheet" href="../../styles/categories/index.css">
 </head>
 <body>
-  <?php
-  $category = ["id" => 1, "name" => "Fiksi", "description" => "Novel dan cerita rekaan", "total_books" => 3];
-  ?>
-  <div class="app-shell">
+  
+<?php
+require '../../repositories/category-repository.php';
+
+$categories = getCategories();
+
+if (isset($_GET['delete'])) {
+    echo "Aksi hapus kategori dengan ID " . (int) $_GET['delete'] . " berhasil dipanggil.";
+}
+
+$category = getCategory((int) ($_GET['id'] ?? 1));
+if (!$category) {
+    $category = $categories[0];
+}
+
+?>
+
+<div class="app-shell">
   <?php include '../../components/admin/sidebar.php'; ?>
 
-    <main class="app-main">
+  <main class="app-main">
     <?php
-$pageTitle = 'Manajemen Kategori';
-$pageSubtitle = 'Kelola data kategori buku';
-include '../../components/admin/topbar.php';
-?>
+    $pageTitle = 'Manajemen Kategori';
+    $pageSubtitle = 'Kelola data kategori buku';
+    include '../../components/admin/topbar.php';
+    ?>
+
 
       <div class="app-content">
         <div class="toolbar">
