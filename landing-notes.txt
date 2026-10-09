@@ -1,0 +1,1 @@
+Refleksi: Halaman landing Immanuel Library dibuat agar pengguna dapat mengenal perpustakaan. Header dan footer dipisahkan menjadi komponen agar kode lebih rapi dan dapat digunakan kembali. 
