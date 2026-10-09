@@ -7,21 +7,30 @@
   <link rel="stylesheet" href="../../styles/profile/edit.css">
 </head>
 <body>
-  <?php
-  $user = [
-      "id"    => 1,
-      "name"  => "Budi Santoso",
-      "email" => "budi.santoso@siswa.ski.sch.id",
-      "role"  => "member",
-  ];
+  
+<?php
+require '../../repositories/user-repository.php';
 
-  $profile = [
-      "user_id" => 1,
-      "phone"   => "0812-3456-7890",
-      "address" => "Jl. Merdeka No. 21, Pontianak, Kalimantan Barat",
-      "bio"     => "Murid kelas XI TKJ yang gemar membaca novel fiksi dan buku pengembangan diri.",
-  ];
-  ?>
+$user = getUser(1);
+
+$profile = [
+    "user_id" => 1,
+    "phone" => "0812-3456-7890",
+    "address" => "Jl. Merdeka No. 21, Pontianak, Kalimantan Barat",
+    "bio" => "Murid kelas XI TKJ yang gemar membaca novel fiksi dan buku pengembangan diri.",
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user['name'] = trim($_POST['name'] ?? $user['name']);
+    $user['email'] = trim($_POST['email'] ?? $user['email']);
+    $profile['phone'] = trim($_POST['phone'] ?? $profile['phone']);
+    $profile['address'] = trim($_POST['address'] ?? $profile['address']);
+    $profile['bio'] = trim($_POST['bio'] ?? $profile['bio']);
+
+    echo '<p>Profil berhasil diperbarui.</p>';
+}
+?>
+
   <div class="app-shell">
   <?php include '../../components/admin/sidebar.php'; ?>
 
@@ -32,7 +41,7 @@ $pageSubtitle = 'Kelola informasi profil Anda';
 include '../../components/admin/topbar.php';
 ?>
       <div class="app-content">
-        <form method="" action="">
+        <form method="POST" action="">
           <div class="form-card" style="margin-bottom:20px;">
             <div class="form-section-title">Data Akun</div>
             <div class="form-row">
