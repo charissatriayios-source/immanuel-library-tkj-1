@@ -8,18 +8,31 @@
 </head>
 <body>
   <?php
-  $categories = ["Fiksi", "Sains", "Sejarah", "Teknologi"];
-  $authors = ["Andrea Hirata", "Tere Liye", "J.K. Rowling", "Pramoedya Ananta Toer", "Sapardi Djoko Damono"];
+require '../../repositories/book-repository.php';
 
-  $book = [
-      "id" => 5, "title" => "Antologi Rasa Nusantara", "isbn" => "978-602-1234-56-7",
-      "year" => 2021, "stock" => 4, "category_id" => 1,
-      "description" => "Kumpulan puisi dan cerita pendek dari berbagai penulis Nusantara.",
-      "author_ids" => [4, 5],
-  ];
-  ?>
-  <div class="app-shell">
- <?php include '../../components/admin/sidebar.php'; ?>
+$categories = ["Fiksi", "Sains", "Sejarah", "Teknologi"];
+$authors = ["Andrea Hirata", "Tere Liye", "J.K. Rowling", "Pramoedya Ananta Toer", "Sapardi Djoko Damono"];
+
+$book = getBook((int) ($_GET['id'] ?? 5));
+
+if (!$book) {
+    echo "Buku tidak ditemukan.";
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $book['title'] = $_POST['title'] ?? $book['title'];
+    $book['isbn'] = $_POST['isbn'] ?? $book['isbn'];
+    $book['year'] = (int) ($_POST['year'] ?? $book['year']);
+    $book['stock'] = (int) ($_POST['stock'] ?? $book['stock']);
+    $book['description'] = $_POST['description'] ?? $book['description'];
+
+    echo "Data buku berhasil diperbarui.";
+}
+
+$book['category_id'] = 1;
+$book['author_ids'] = [4, 5];
+?>
 
     <main class="app-main">
     <?php
@@ -29,7 +42,7 @@ include '../../components/admin/topbar.php';
 ?>
 
       <div class="app-content">
-        <form method="" action="">
+        <form method="POST" action="">
           <input type="hidden" name="id" value="<?= $book['id'] ?>">
           <div class="form-card" style="margin-bottom:20px;">
             <div class="form-section-title">Data Buku</div>
